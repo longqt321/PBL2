@@ -514,12 +514,17 @@ std::vector<std::string> callGetStylistIDList() // Done
 
 void callUpdateStylist (std::string id, std::string firstname, std::string lastname, int gender, std::string phonenumber, std::string username, std::string password) // Done
 {
-    dbUser.Update(id, "firstName", firstname);
-    dbUser.Update(id, "lastName", lastname);
+    if (!firstname.empty())
+        dbUser.Update(id, "firstName", firstname);
+    if (!lastname.empty())
+        dbUser.Update(id, "lastName", lastname);
     dbUser.Update(id, "gender", gender == 0? "Male": "Female");
-    dbUser.Update(id, "phoneNumber", phonenumber);
-    dbUser.Update(id, "username", username);
-    dbUser.Update(id, "password", password);
+    if (!phonenumber.empty())
+        dbUser.Update(id, "phoneNumber", phonenumber);
+    if (!username.empty())
+        dbUser.Update(id, "username", username);
+    if (!password.empty())
+        dbUser.Update(id, "password", Hash(password));
 }
 
 void callDeleteStylist(std::string id) // Done
